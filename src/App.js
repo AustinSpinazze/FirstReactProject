@@ -82,17 +82,17 @@ class App extends Component {
     // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Does this work now?'));
 
     // We can also pass values to our function by using new name for instance
-    switchNameHandler = (newName) => {
-      // console.log('Was clicked!');
-      // DON'T DO THIS: this.state.persons[0].name = 'Austin';
-      this.setState( {
-        persons: [
-          { name: newName, age: 26 },
-          { name: 'Alex', age: 24 },
-          { name: 'Nicholas', age: 31 }
-        ]
-      } )
-    }
+    // switchNameHandler = (newName) => {
+    //   console.log('Was clicked!');
+    //   DON'T DO THIS: this.state.persons[0].name = 'Austin';
+    //   this.setState( {
+    //     persons: [
+    //       { name: newName, age: 26 },
+    //       { name: 'Alex', age: 24 },
+    //       { name: 'Nicholas', age: 31 }
+    //     ]
+    //   } )
+    // }
   
     nameChangedHandler = (event) => {
       this.setState( {
@@ -104,13 +104,18 @@ class App extends Component {
       } )
     }
 
+    deletePersonHandler = (personIndex) => {
+      const persons = this.state.persons;
+      persons.splice(personIndex, 1);
+      this.setState({persons: persons})
+    }
+
     togglePersonsHandler = () => {
       const doesShow = this.state.showPersons;
       this.setState({showPersons: !doesShow});
     }
 
     render () {
-
       const style = {
         backgroundColor: 'white',
         font: 'inherit',
@@ -129,9 +134,12 @@ class App extends Component {
         persons = (
           <div>
             {/* .map() maps every element in a given array into something else. It does this by executing a method on every element in a given array. The argument passed is a function
-            in our case it is called persons and try to return an array of JSX objects or in our case the Person object */}
-            {this.state.persons.map(person => {
-              return <Person 
+            in our case it is called persons and try to return an array of JSX objects or in our case the Person object. The second argument index is the key for the pair. If we do not
+            have a key then we will have no idea what we are deleting 
+            This is also the common pattern for outputting lists in React */}
+            {this.state.persons.map((person, index) => {
+              return <Person
+                click={() => this.deletePersonHandler(index)} // Click property being set to Person component to signal delete and call deletePersonHandler method
                 name={person.name} 
                 age={person.age} />
             })}

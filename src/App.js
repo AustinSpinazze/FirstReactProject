@@ -105,7 +105,6 @@ class App extends Component {
     }
 
     togglePersonsHandler = () => {
-      console.log("You are here");
       const doesShow = this.state.showPersons;
       this.setState({showPersons: !doesShow});
     }
@@ -120,6 +119,32 @@ class App extends Component {
         cursor: 'pointer'
       };
       
+      let persons = null;
+
+      // Because a change in state causes React to re-render we are able to simple make a new variable set it to persons and then create a javascript conditional
+      // that chacks if this.state.persons === true. If it does it re-renders show thing the list of persons if not then it does nothing. We are outsourcing the check from the
+      // JSX to a variable we conditionally assign before rturning. By doing this we keep our "core component" clean as a template and make sure we only have to have one single
+      // reference to either render nothing ot all the persons
+      if(this.state.showPersons) {
+        persons = (
+          <div>
+              <Person 
+                name={this.state.persons[0].name} 
+                age={this.state.persons[0].age} />
+              <Person 
+                name={this.state.persons[1].name} 
+                age={this.state.persons[1].age}
+                //You can pass methods as props so that you can call a method which might change the state in another component that may not have or should not have access to a certain state
+                click={this.switchNameHandler.bind(this, 'Augustus!!!')}
+                //We call this, 'String' because this ^ controls what the this inside the function will refer to and binds it here
+                changed={this.nameChangedHandler}> My Hobbies: Drawing, Snuggling, Netflixing</Person>
+              <Person 
+                name={this.state.persons[2].name} 
+                age={this.state.persons[2].age} />
+            </div>
+        );
+      }
+
       return (
         <div className="App">
           <h1>Hi, I'm a React App</h1>
@@ -129,7 +154,7 @@ class App extends Component {
           {/* Below we are injecting javascript code into JSX by using the curly crackets and then comparing the state property
           this.state.showPersons which is initally set to false. We check to see if it is true using the question mark if it is we render the div
           if it is not then we render null */}
-          { 
+          {/* { 
             this.state.showPersons === true ?
             <div>
               <Person 
@@ -146,7 +171,8 @@ class App extends Component {
                 name={this.state.persons[2].name} 
                 age={this.state.persons[2].age} />
             </div> : null
-          }
+          } */}
+          {persons}
         </div>
       );
       // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Does this work now?'));

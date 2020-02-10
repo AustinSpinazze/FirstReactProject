@@ -128,20 +128,27 @@ class App extends Component {
       if(this.state.showPersons) {
         persons = (
           <div>
-              <Person 
-                name={this.state.persons[0].name} 
-                age={this.state.persons[0].age} />
-              <Person 
-                name={this.state.persons[1].name} 
-                age={this.state.persons[1].age}
-                //You can pass methods as props so that you can call a method which might change the state in another component that may not have or should not have access to a certain state
-                click={this.switchNameHandler.bind(this, 'Augustus!!!')}
-                //We call this, 'String' because this ^ controls what the this inside the function will refer to and binds it here
-                changed={this.nameChangedHandler}> My Hobbies: Drawing, Snuggling, Netflixing</Person>
-              <Person 
-                name={this.state.persons[2].name} 
-                age={this.state.persons[2].age} />
-            </div>
+            {/* .map() maps every element in a given array into something else. It does this by executing a method on every element in a given array. The argument passed is a function
+            in our case it is called persons and try to return an array of JSX objects or in our case the Person object */}
+            {this.state.persons.map(person => {
+              return <Person 
+                name={person.name} 
+                age={person.age} />
+            })}
+            {/* <Person 
+              name={this.state.persons[0].name} 
+              age={this.state.persons[0].age} />
+            <Person 
+              name={this.state.persons[1].name} 
+              age={this.state.persons[1].age}
+              //You can pass methods as props so that you can call a method which might change the state in another component that may not have or should not have access to a certain state
+              click={this.switchNameHandler.bind(this, 'Augustus!!!')}
+              //We call this, 'String' because this ^ controls what the this inside the function will refer to and binds it here
+              changed={this.nameChangedHandler}> My Hobbies: Drawing, Snuggling, Netflixing</Person>
+            <Person 
+              name={this.state.persons[2].name} 
+              age={this.state.persons[2].age} /> */}
+          </div>
         );
       }
 

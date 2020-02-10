@@ -105,7 +105,12 @@ class App extends Component {
     }
 
     deletePersonHandler = (personIndex) => {
-      const persons = this.state.persons;
+      // We call the slice method in order to make a copy of the array because currently we are pointing to the original array and mutating it which could lead to
+      // to issues down the road in keeping track of data
+
+      // const persons = this.state.persons.slice();
+      // An alternative to this approach would be to use the ES6 spread method
+      const persons = [...this.state.persons];
       persons.splice(personIndex, 1);
       this.setState({persons: persons})
     }

@@ -36,7 +36,8 @@ class App extends Component {
         { name: 'Alexis', age: 24 },
         { name: 'Nick', age: 31 }
       ],
-      otherState: 'some other value'
+      otherState: 'some other value',
+      showPersons: false
     }
 
     // const [otherState, setOtherState] = useState('some other Value');
@@ -103,6 +104,12 @@ class App extends Component {
       } )
     }
 
+    togglePersonsHandler = () => {
+      console.log("You are here");
+      const doesShow = this.state.showPersons;
+      this.setState({showPersons: !doesShow});
+    }
+
     render () {
 
       const style = {
@@ -118,20 +125,28 @@ class App extends Component {
           <h1>Hi, I'm a React App</h1>
           <p>This is really working!</p>
           {/* Creating an anonomyous function to pass a parameter is not as efficent as just using bind */}
-          <button style={style} onClick={() => this.switchNameHandler('Augustus!!')}>Switch Name</button>
-          <Person 
-            name={this.state.persons[0].name} 
-            age={this.state.persons[0].age} />
-          <Person 
-            name={this.state.persons[1].name} 
-            age={this.state.persons[1].age}
-            //You can pass methods as props so that you can call a method which might change the state in another component that may not have or should not have access to a certain state
-            click={this.switchNameHandler.bind(this, 'Augustus!!!')}
-            //We call this, 'String' because this ^ controls what the this inside the function will refer to and binds it here
-            changed={this.nameChangedHandler}> My Hobbies: Drawing, Snuggling, Netflixing</Person>
-          <Person 
-            name={this.state.persons[2].name} 
-            age={this.state.persons[2].age} />
+          <button style={style} onClick={this.togglePersonsHandler}>Toggle Persons</button>
+          {/* Below we are injecting javascript code into JSX by using the curly crackets and then comparing the state property
+          this.state.showPersons which is initally set to false. We check to see if it is true using the question mark if it is we render the div
+          if it is not then we render null */}
+          { 
+            this.state.showPersons === true ?
+            <div>
+              <Person 
+                name={this.state.persons[0].name} 
+                age={this.state.persons[0].age} />
+              <Person 
+                name={this.state.persons[1].name} 
+                age={this.state.persons[1].age}
+                //You can pass methods as props so that you can call a method which might change the state in another component that may not have or should not have access to a certain state
+                click={this.switchNameHandler.bind(this, 'Augustus!!!')}
+                //We call this, 'String' because this ^ controls what the this inside the function will refer to and binds it here
+                changed={this.nameChangedHandler}> My Hobbies: Drawing, Snuggling, Netflixing</Person>
+              <Person 
+                name={this.state.persons[2].name} 
+                age={this.state.persons[2].age} />
+            </div> : null
+          }
         </div>
       );
       // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Does this work now?'));

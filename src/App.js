@@ -32,9 +32,9 @@ class App extends Component {
 
     state = {
       persons: [
-        { name: 'Austin', age: 25 },
-        { name: 'Alexis', age: 24 },
-        { name: 'Nick', age: 31 }
+        { id: 'skfjs', name: 'Austin', age: 25 },
+        { id: 'ksdjd', name: 'Alexis', age: 24 },
+        { id: 'kjkjs', name: 'Nick', age: 31 }
       ],
       otherState: 'some other value',
       showPersons: false
@@ -93,15 +93,19 @@ class App extends Component {
     //     ]
     //   } )
     // }
-  
-    nameChangedHandler = (event) => {
-      this.setState( {
-        persons: [
-          { name: 'Augustus', age: 26 },
-          { name: event.target.value, age: 24 },
-          { name: 'Nicholas', age: 31 }
-        ]
-      } )
+    
+    nameChangedHandler = (event, id) => {
+      // We use .find() because we only want to update the state of the person we typed
+      const personIndex = this.state.persons.findIndex(p => {
+        return p.id === id;
+      });
+      const person = {...this.state.persons[personIndex]};
+      // or
+      // const person = Object.assign({}, this.state.persons[personIndex]);
+      person.name = event.target.value;
+      const persons = [...this.state.persons]
+      persons[personIndex] = person;
+      this.setState( {persons: persons} );
     }
 
     deletePersonHandler = (personIndex) => {
@@ -122,7 +126,8 @@ class App extends Component {
 
     render () {
       const style = {
-        backgroundColor: 'white',
+        backgroundColor: 'green',
+        color: 'white',
         font: 'inherit',
         border: '1px solid blue',
         padding: '8px',
@@ -146,7 +151,11 @@ class App extends Component {
               return <Person
                 click={() => this.deletePersonHandler(index)} // Click property being set to Person component to signal delete and call deletePersonHandler method
                 name={person.name} 
-                age={person.age} />
+                age={person.age} 
+                // We assign a key to tell React which elements in the DOM need to change and which do not
+                key={person.id}
+                changed = {(event) => this.nameChangedHandler(event, person.id)}
+                />
             })}
             {/* <Person 
               name={this.state.persons[0].name} 
@@ -163,12 +172,21 @@ class App extends Component {
               age={this.state.persons[2].age} /> */}
           </div>
         );
+        style.backgroundColor = 'red';
       }
+
+      var classes = [];
+      if(this.state.persons.length <= 2) {
+        classes.push('red'); // classes = ['red']
+      }
+      if(this.state.persons.length <= 1) {
+        classes.push('bold'); // classes = ['red', 'bold']
+      } 
 
       return (
         <div className="App">
           <h1>Hi, I'm a React App</h1>
-          <p>This is really working!</p>
+          <p className={classes.join(' ')}>This is really working!</p>
           {/* Creating an anonomyous function to pass a parameter is not as efficent as just using bind */}
           <button style={style} onClick={this.togglePersonsHandler}>Toggle Persons</button>
           {/* Below we are injecting javascript code into JSX by using the curly crackets and then comparing the state property

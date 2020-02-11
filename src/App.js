@@ -12,8 +12,21 @@ they only get and present data.
 // import React, { useState } from 'react';
 import React, { Component } from 'react';
 import './App.css';
-import Radium from 'radium'
 import Person from './Person/Person';
+
+// How to use styled components
+// const StyledButton = styled.button`
+//   background-color: ${props => props.alt ? 'red' : 'green'};
+//   color: white;
+//   font: inherit;
+//   border: 1px solid blue;
+//   padding: 8px;
+//   cursor: pointer;
+//   &:hover {
+//     background-color: ${props => props.alt ? 'salmon' : 'lightgreen'}; 
+//     color: black;
+//   }
+// `;
 
 class App extends Component {
 // const App = props => {
@@ -126,15 +139,15 @@ class App extends Component {
     }
 
     render () {
-      const style = {
-        backgroundColor: 'green',
-        color: 'white',
-        font: 'inherit',
-        border: '1px solid blue',
-        padding: '8px',
-        cursor: 'pointer',
-        ':hover': {backgroundColor: 'lightgreen', color: 'black'}
-      };
+      // const style = {
+      //   backgroundColor: 'green',
+      //   color: 'white',
+      //   font: 'inherit',
+      //   border: '1px solid blue',
+      //   padding: '8px',
+      //   cursor: 'pointer',
+      //   ':hover': {backgroundColor: 'lightgreen', color: 'black'}
+      // };
       
       let persons = null;
 
@@ -174,8 +187,8 @@ class App extends Component {
               age={this.state.persons[2].age} /> */}
           </div>
         );
-        style.backgroundColor = 'red';
-        style[':hover'] = {backgroundColor: 'salmon', color: 'black'};
+        // style.backgroundColor = 'red';
+        // style[':hover'] = {backgroundColor: 'salmon', color: 'black'};
       }
 
       var classes = [];
@@ -189,36 +202,36 @@ class App extends Component {
       return (
         <div className="App">
           <h1>Hi, I'm a React App</h1>
-          <p className={classes.join(' ')}>This is really working!</p>
-          {/* Creating an anonomyous function to pass a parameter is not as efficent as just using bind */}
-          <button style={style} onClick={this.togglePersonsHandler}>Toggle Persons</button>
-          {/* Below we are injecting javascript code into JSX by using the curly crackets and then comparing the state property
-          this.state.showPersons which is initally set to false. We check to see if it is true using the question mark if it is we render the div
-          if it is not then we render null */}
-          {/* { 
-            this.state.showPersons === true ?
-            <div>
-              <Person 
-                name={this.state.persons[0].name} 
-                age={this.state.persons[0].age} />
-              <Person 
-                name={this.state.persons[1].name} 
-                age={this.state.persons[1].age}
-                //You can pass methods as props so that you can call a method which might change the state in another component that may not have or should not have access to a certain state
-                click={this.switchNameHandler.bind(this, 'Augustus!!!')}
-                //We call this, 'String' because this ^ controls what the this inside the function will refer to and binds it here
-                changed={this.nameChangedHandler}> My Hobbies: Drawing, Snuggling, Netflixing</Person>
-              <Person 
-                name={this.state.persons[2].name} 
-                age={this.state.persons[2].age} />
-            </div> : null
-          } */}
-          {persons}
-        </div>
+            <p className={classes.join(' ')}>This is really working!</p>
+            {/* Creating an anonomyous function to pass a parameter is not as efficent as just using bind */}
+            <button className="button" onClick={this.togglePersonsHandler}>Toggle Persons</button>
+            {/* Below we are injecting javascript code into JSX by using the curly crackets and then comparing the state property
+            this.state.showPersons which is initally set to false. We check to see if it is true using the question mark if it is we render the div
+            if it is not then we render null */}
+            {/* { 
+              this.state.showPersons === true ?
+              <div>
+                <Person 
+                  name={this.state.persons[0].name} 
+                  age={this.state.persons[0].age} />
+                <Person 
+                  name={this.state.persons[1].name} 
+                  age={this.state.persons[1].age}
+                  //You can pass methods as props so that you can call a method which might change the state in another component that may not have or should not have access to a certain state
+                  click={this.switchNameHandler.bind(this, 'Augustus!!!')}
+                  //We call this, 'String' because this ^ controls what the this inside the function will refer to and binds it here
+                  changed={this.nameChangedHandler}> My Hobbies: Drawing, Snuggling, Netflixing</Person>
+                <Person 
+                  name={this.state.persons[2].name} 
+                  age={this.state.persons[2].age} />
+              </div> : null
+            } */}
+            {persons}
+          </div>
       );
       // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Does this work now?'));
     }
 }
 
 // Radium is a higher order component just a component wrapping your component injecting more functionality
-export default Radium(App);
+export default App;

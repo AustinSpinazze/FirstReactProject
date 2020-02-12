@@ -13,6 +13,7 @@ they only get and present data.
 import React, { Component } from 'react';
 import classes from './App.module.css';
 import Person from './Person/Person';
+import ErrorBoundary from './ErrorBoundary/ErrorBoundary'
 
 // How to use styled components
 // const StyledButton = styled.button`
@@ -154,7 +155,7 @@ class App extends Component {
       let btnClass = '';
 
       // Because a change in state causes React to re-render we are able to simple make a new variable set it to persons and then create a javascript conditional
-      // that chacks if this.state.persons === true. If it does it re-renders show thing the list of persons if not then it does nothing. We are outsourcing the check from the
+      // that checks if this.state.persons === true. If it does it re-renders show thing the list of persons if not then it does nothing. We are outsourcing the check from the
       // JSX to a variable we conditionally assign before rturning. By doing this we keep our "core component" clean as a template and make sure we only have to have one single
       // reference to either render nothing ot all the persons
       if(this.state.showPersons) {
@@ -165,14 +166,16 @@ class App extends Component {
             have a key then we will have no idea what we are deleting 
             This is also the common pattern for outputting lists in React */}
             {this.state.persons.map((person, index) => {
-              return <Person
+              return <ErrorBoundary key={person.id}>
+                <Person
                 click={() => this.deletePersonHandler(index)} // Click property being set to Person component to signal delete and call deletePersonHandler method
                 name={person.name} 
                 age={person.age} 
                 // We assign a key to tell React which elements in the DOM need to change and which do not
-                key={person.id}
+                // key={person.id}
                 changed = {(event) => this.nameChangedHandler(event, person.id)}
                 />
+              </ErrorBoundary>
             })}
             {/* <Person 
               name={this.state.persons[0].name} 

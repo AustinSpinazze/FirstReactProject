@@ -1,6 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
-//import './Person.css';
+// import styled from 'styled-components';
+import classes from './Person.module.css';
 
 //ES6 declaring function
 // function person() {
@@ -29,18 +29,18 @@ import styled from 'styled-components';
 *     }    
 *   }
 */
-const StyleDiv = styled.div`
-    width: 60%;
-    margin: 16px auto;
-    border: 1px solid #eee;
-    box-shadow: 0 2px 3px #ccc;
-    padding: 16px;
-    text-align: center;
+// const StyleDiv = styled.div`
+//     width: 60%;
+//     margin: 16px auto;
+//     border: 1px solid #eee;
+//     box-shadow: 0 2px 3px #ccc;
+//     padding: 16px;
+//     text-align: center;
 
-    @media (min-width: 500px) {
-        width: 450px;
-    }
-`;
+//     @media (min-width: 500px) {
+//         width: 450px;
+//     }
+// `;
 
 const person = (props) => {
     // const style = {
@@ -51,8 +51,15 @@ const person = (props) => {
 
     // In order to use javascript code in JSX use sing curly braces
     // This allows the output of dynamic content with our JSX content
+
+    const rnd = Math.random();
+
+    if(rnd > 0.7) {
+        throw new Error('Something went wrong')
+    }
+
     return (
-        <StyleDiv>
+        <div className={classes.Person}>
         {/* <div className="Person" style={style}> */}
             <p onClick={props.click}>I'm {props.name} and I am {props.age} years old!</p>
             {/* We use props.children when we are trying to pass children elements
@@ -60,7 +67,7 @@ const person = (props) => {
             <p>{props.children}</p>
             <input type="text" onChange={props.changed} value={props.name}></input>
         {/* </div> */}
-        </StyleDiv>
+        </div>
     );
 }
 

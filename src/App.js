@@ -11,7 +11,7 @@ they only get and present data.
 
 // import React, { useState } from 'react';
 import React, { Component } from 'react';
-import './App.css';
+import classes from './App.module.css';
 import Person from './Person/Person';
 
 // How to use styled components
@@ -151,6 +151,8 @@ class App extends Component {
       
       let persons = null;
 
+      let btnClass = '';
+
       // Because a change in state causes React to re-render we are able to simple make a new variable set it to persons and then create a javascript conditional
       // that chacks if this.state.persons === true. If it does it re-renders show thing the list of persons if not then it does nothing. We are outsourcing the check from the
       // JSX to a variable we conditionally assign before rturning. By doing this we keep our "core component" clean as a template and make sure we only have to have one single
@@ -189,22 +191,24 @@ class App extends Component {
         );
         // style.backgroundColor = 'red';
         // style[':hover'] = {backgroundColor: 'salmon', color: 'black'};
+
+        btnClass = classes.Red;
       }
 
-      var classes = [];
+      var assignedClasses = [];
       if(this.state.persons.length <= 2) {
-        classes.push('red'); // classes = ['red']
+        assignedClasses.push(classes.red); // classes = ['red']
       }
       if(this.state.persons.length <= 1) {
-        classes.push('bold'); // classes = ['red', 'bold']
+        assignedClasses.push(classes.bold); // classes = ['red', 'bold']
       } 
 
       return (
-        <div className="App">
+        <div className={classes.App}>
           <h1>Hi, I'm a React App</h1>
-            <p className={classes.join(' ')}>This is really working!</p>
+            <p className={assignedClasses.join(' ')}>This is really working!</p>
             {/* Creating an anonomyous function to pass a parameter is not as efficent as just using bind */}
-            <button className="button" onClick={this.togglePersonsHandler}>Toggle Persons</button>
+            <button className={btnClass} onClick={this.togglePersonsHandler}>Toggle Persons</button>
             {/* Below we are injecting javascript code into JSX by using the curly crackets and then comparing the state property
             this.state.showPersons which is initally set to false. We check to see if it is true using the question mark if it is we render the div
             if it is not then we render null */}

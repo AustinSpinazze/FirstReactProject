@@ -1,3 +1,10 @@
+// import React, { useState } from 'react';
+import React, { Component } from 'react';
+import classes from './App.module.css';
+import Persons from '../components/Persons/Persons';
+import Cockpit from '../components/Cockpit/Cockpit'
+//import ErrorBoundary from './ErrorBoundary/ErrorBoundary'
+
 /*
 Stateful vs. Stateless Components - stateful components a component that manages state. Stateless component has no internal state management. It is good practice to make as many
 stateless (or dumb components) 
@@ -8,12 +15,6 @@ to maintain and manage. You have a clear flow of data and it is very clear where
 Person.js is considered a stateless component because they have no internal logic. They are presentational components because typically
 they only get and present data.
 */
-
-// import React, { useState } from 'react';
-import React, { Component } from 'react';
-import classes from './App.module.css';
-import Person from './Person/Person';
-import ErrorBoundary from './ErrorBoundary/ErrorBoundary'
 
 // How to use styled components
 // const StyledButton = styled.button`
@@ -152,66 +153,68 @@ class App extends Component {
       
       let persons = null;
 
-      let btnClass = '';
+      //let btnClass = '';
 
       // Because a change in state causes React to re-render we are able to simple make a new variable set it to persons and then create a javascript conditional
-      // that checks if this.state.persons === true. If it does it re-renders show thing the list of persons if not then it does nothing. We are outsourcing the check from the
+      // that chacks if this.state.persons === true. If it does it re-renders show thing the list of persons if not then it does nothing. We are outsourcing the check from the
       // JSX to a variable we conditionally assign before rturning. By doing this we keep our "core component" clean as a template and make sure we only have to have one single
       // reference to either render nothing ot all the persons
       if(this.state.showPersons) {
-        persons = (
-          <div>
-            {/* .map() maps every element in a given array into something else. It does this by executing a method on every element in a given array. The argument passed is a function
-            in our case it is called persons and try to return an array of JSX objects or in our case the Person object. The second argument index is the key for the pair. If we do not
-            have a key then we will have no idea what we are deleting 
-            This is also the common pattern for outputting lists in React */}
-            {this.state.persons.map((person, index) => {
-              return <ErrorBoundary key={person.id}>
-                <Person
-                click={() => this.deletePersonHandler(index)} // Click property being set to Person component to signal delete and call deletePersonHandler method
-                name={person.name} 
-                age={person.age} 
-                // We assign a key to tell React which elements in the DOM need to change and which do not
-                // key={person.id}
-                changed = {(event) => this.nameChangedHandler(event, person.id)}
-                />
-              </ErrorBoundary>
-            })}
-            {/* <Person 
-              name={this.state.persons[0].name} 
-              age={this.state.persons[0].age} />
-            <Person 
-              name={this.state.persons[1].name} 
-              age={this.state.persons[1].age}
-              //You can pass methods as props so that you can call a method which might change the state in another component that may not have or should not have access to a certain state
-              click={this.switchNameHandler.bind(this, 'Augustus!!!')}
-              //We call this, 'String' because this ^ controls what the this inside the function will refer to and binds it here
-              changed={this.nameChangedHandler}> My Hobbies: Drawing, Snuggling, Netflixing</Person>
-            <Person 
-              name={this.state.persons[2].name} 
-              age={this.state.persons[2].age} /> */}
-          </div>
-        );
+        persons = <Persons persons={this.state.persons} clicked={this.deletePersonHandler} changed={this.nameChangedHandler}/>;
+          // <div>
+          //   .map() maps every element in a given array into something else. It does this by executing a method on every element in a given array. The argument passed is a function
+          //   in our case it is called persons and try to return an array of JSX objects or in our case the Person object. The second argument index is the key for the pair. If we do not
+          //   have a key then we will have no idea what we are deleting 
+          //   This is also the common pattern for outputting lists in React
+          //   {this.state.persons.map((person, index) => {
+          //     return <Person
+          //       click={() => this.deletePersonHandler(index)} // Click property being set to Person component to signal delete and call deletePersonHandler method
+          //       name={person.name} 
+          //       age={person.age} 
+          //       // We assign a key to tell React which elements in the DOM need to change and which do not
+          //       key={person.id}
+          //       changed = {(event) => this.nameChangedHandler(event, person.id)}
+          //       />
+          //   })} 
+            
+          //   Removed in order to move this function to a container
+            
+           
+          //   <Person 
+          //     name={this.state.persons[0].name} 
+          //     age={this.state.persons[0].age} />
+          //   <Person 
+          //     name={this.state.persons[1].name} 
+          //     age={this.state.persons[1].age}
+          //     //You can pass methods as props so that you can call a method which might change the state in another component that may not have or should not have access to a certain state
+          //     click={this.switchNameHandler.bind(this, 'Augustus!!!')}
+          //     //We call this, 'String' because this ^ controls what the this inside the function will refer to and binds it here
+          //     changed={this.nameChangedHandler}> My Hobbies: Drawing, Snuggling, Netflixing</Person>
+          //   <Person 
+          //     name={this.state.persons[2].name} 
+          //     age={this.state.persons[2].age} />
+          //</div>
         // style.backgroundColor = 'red';
         // style[':hover'] = {backgroundColor: 'salmon', color: 'black'};
 
-        btnClass = classes.Red;
+        //btnClass = classes.Red;
       }
 
-      var assignedClasses = [];
-      if(this.state.persons.length <= 2) {
-        assignedClasses.push(classes.red); // classes = ['red']
-      }
-      if(this.state.persons.length <= 1) {
-        assignedClasses.push(classes.bold); // classes = ['red', 'bold']
-      } 
+      // Removed to give this its own container in cockpit.js
+      // const assignedClasses = [];
+      // if(this.state.persons.length <= 2) {
+      //   assignedClasses.push(classes.red); // classes = ['red']
+      // }
+      // if(this.state.persons.length <= 1) {
+      //   assignedClasses.push(classes.bold); // classes = ['red', 'bold']
+      // } 
 
       return (
         <div className={classes.App}>
-          <h1>Hi, I'm a React App</h1>
-            <p className={assignedClasses.join(' ')}>This is really working!</p>
+          {/* <h1>Hi, I'm a React App</h1>
+            <p className={assignedClasses.join(' ')}>This is really working!</p> */}
             {/* Creating an anonomyous function to pass a parameter is not as efficent as just using bind */}
-            <button className={btnClass} onClick={this.togglePersonsHandler}>Toggle Persons</button>
+            {/* <button className={btnClass} onClick={this.togglePersonsHandler}>Toggle Persons</button> */}
             {/* Below we are injecting javascript code into JSX by using the curly crackets and then comparing the state property
             this.state.showPersons which is initally set to false. We check to see if it is true using the question mark if it is we render the div
             if it is not then we render null */}
@@ -233,6 +236,7 @@ class App extends Component {
                   age={this.state.persons[2].age} />
               </div> : null
             } */}
+            <Cockpit showPersons = {this.state.showPersons} persons={this.state.persons} clicked={(this.togglePersonsHandler)}/>
             {persons}
           </div>
       );

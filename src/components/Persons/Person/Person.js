@@ -52,11 +52,11 @@ const person = (props) => {
     // In order to use javascript code in JSX use sing curly braces
     // This allows the output of dynamic content with our JSX content
 
-    const rnd = Math.random();
+    // const rnd = Math.random();
 
-    if(rnd > 0.7) {
-        throw new Error('Something went wrong')
-    }
+    // if(rnd > 0.7) {
+    //     throw new Error('Something went wrong')
+    // }
 
     return (
         <div className={classes.Person}>

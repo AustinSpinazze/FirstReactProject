@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 // import styled from 'styled-components';
 import classes from './Person.module.css';
 
@@ -42,7 +42,7 @@ import classes from './Person.module.css';
 //     }
 // `;
 
-const person = (props) => {
+class Person extends Component {
     // const style = {
     //     '@media (min-width: 500px)': {
     //         width: '450px'
@@ -58,17 +58,21 @@ const person = (props) => {
     //     throw new Error('Something went wrong')
     // }
 
-    return (
-        <div className={classes.Person}>
-        {/* <div className="Person" style={style}> */}
-            <p onClick={props.click}>I'm {props.name} and I am {props.age} years old!</p>
-            {/* We use props.children when we are trying to pass children elements
-            (elements inside elements) directly into the element output */}
-            <p>{props.children}</p>
-            <input type="text" onChange={props.changed} value={props.name}></input>
-        {/* </div> */}
-        </div>
-    );
+    render () {
+        console.log('[Person.js] rendering...');
+        return (
+            // In React class props are accessed through the this keyword
+            <div className={classes.Person}>
+            {/* <div className="Person" style={style}> */}
+                <p onClick={this.props.click}>I'm {this.props.name} and I am {this.props.age} years old!</p>
+                {/* We use props.children when we are trying to pass children elements
+                (elements inside elements) directly into the element output */}
+                <p>{this.props.children}</p>
+                <input type="text" onChange={this.props.changed} value={this.props.name}></input>
+            {/* </div> */}
+            </div>
+        );
+    }
 }
 
-export default person;
+export default Person;
